@@ -1,0 +1,7 @@
+com\example\musicapi\service\DataInitializationService.class
+com\example\musicapi\controller\ArtistController.class
+com\example\musicapi\repository\ArtistRepository.class
+com\example\musicapi\model\Album.class
+com\example\musicapi\MusicApiApplication.class
+com\example\musicapi\repository\AlbumRepository.class
+com\example\musicapi\model\Artist.class
