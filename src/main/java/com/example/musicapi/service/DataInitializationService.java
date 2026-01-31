@@ -20,6 +20,7 @@ public class DataInitializationService {
         this.artistRepository = artistRepository;
     }
 
+    /*
     @PostConstruct
     public void init() {
         saveArtistWithAlbums("Serj Tankian", ArtistType.SOLO, Arrays.asList("Harakiri", "Black Blooms", "The Rough Dog"));
@@ -27,6 +28,7 @@ public class DataInitializationService {
         saveArtistWithAlbums("Michel Teló", ArtistType.SOLO, Arrays.asList("Bem Sertanejo", "Bem Sertanejo - O Show (Ao Vivo)", "Bem Sertanejo - (1ª Temporada) - EP"));
         saveArtistWithAlbums("Guns N’ Roses", ArtistType.BAND, Arrays.asList("Use Your Illusion I", "Use Your Illusion II", "Greatest Hits"));
     }
+    */
 
     private void saveArtistWithAlbums(String name, ArtistType type, List<String> albumTitles) {
         Artist artist = new Artist();

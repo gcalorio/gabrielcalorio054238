@@ -2,9 +2,11 @@ C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\music
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\security\JwtUserDetailsService.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\model\Album.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\controller\ArtistController.java
+C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\service\StorageService.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\config\WebConfig.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\controller\AuthenticationController.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\MusicApiApplication.java
+C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\config\S3Config.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\security\JwtAuthenticationEntryPoint.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\security\JwtTokenUtil.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\model\Artist.java
@@ -15,3 +17,4 @@ C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\music
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\dto\JwtRequest.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\repository\ArtistRepository.java
 C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\model\ArtistType.java
+C:\Users\gabri\IdeaProjects\gabrielcalorio054238\src\main\java\com\example\musicapi\config\OpenApiConfig.java

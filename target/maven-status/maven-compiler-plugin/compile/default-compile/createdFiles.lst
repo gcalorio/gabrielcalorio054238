@@ -1,11 +1,14 @@
 com\example\musicapi\security\WebSecurityConfig.class
 com\example\musicapi\service\DataInitializationService.class
+com\example\musicapi\service\StorageService.class
 com\example\musicapi\security\JwtAuthenticationEntryPoint.class
 com\example\musicapi\MusicApiApplication.class
 com\example\musicapi\security\JwtRequestFilter.class
+com\example\musicapi\config\S3Config.class
 com\example\musicapi\config\WebConfig.class
 com\example\musicapi\repository\AlbumRepository.class
 com\example\musicapi\model\Artist.class
+com\example\musicapi\config\OpenApiConfig.class
 com\example\musicapi\dto\JwtResponse.class
 com\example\musicapi\controller\ArtistController.class
 com\example\musicapi\dto\JwtRequest.class

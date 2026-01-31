@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,4 +21,9 @@ public class Album {
     @JoinColumn(name = "artist_id")
     @JsonBackReference
     private Artist artist;
+
+    @ElementCollection
+    @CollectionTable(name = "album_covers", joinColumns = @JoinColumn(name = "album_id"))
+    @Column(name = "cover_url")
+    private List<String> coverUrls;
 }
