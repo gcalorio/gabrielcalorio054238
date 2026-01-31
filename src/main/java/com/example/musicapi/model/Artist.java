@@ -18,6 +18,9 @@ public class Artist {
     private Long id;
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    private ArtistType type;
+
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Album> albums;

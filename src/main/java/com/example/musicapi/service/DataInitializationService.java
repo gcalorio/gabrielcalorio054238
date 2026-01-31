@@ -2,6 +2,7 @@ package com.example.musicapi.service;
 
 import com.example.musicapi.model.Album;
 import com.example.musicapi.model.Artist;
+import com.example.musicapi.model.ArtistType;
 import com.example.musicapi.repository.ArtistRepository;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,16 @@ public class DataInitializationService {
 
     @PostConstruct
     public void init() {
-        saveArtistWithAlbums("Serj Tankian", Arrays.asList("Harakiri", "Black Blooms", "The Rough Dog"));
-        saveArtistWithAlbums("Mike Shinoda", Arrays.asList("The Rising Tied", "Post Traumatic", "Post Traumatic EP", "Where’d You Go"));
-        saveArtistWithAlbums("Michel Teló", Arrays.asList("Bem Sertanejo", "Bem Sertanejo - O Show (Ao Vivo)", "Bem Sertanejo - (1ª Temporada) - EP"));
-        saveArtistWithAlbums("Guns N’ Roses", Arrays.asList("Use Your Illusion I", "Use Your Illusion II", "Greatest Hits"));
+        saveArtistWithAlbums("Serj Tankian", ArtistType.SOLO, Arrays.asList("Harakiri", "Black Blooms", "The Rough Dog"));
+        saveArtistWithAlbums("Mike Shinoda", ArtistType.SOLO, Arrays.asList("The Rising Tied", "Post Traumatic", "Post Traumatic EP", "Where’d You Go"));
+        saveArtistWithAlbums("Michel Teló", ArtistType.SOLO, Arrays.asList("Bem Sertanejo", "Bem Sertanejo - O Show (Ao Vivo)", "Bem Sertanejo - (1ª Temporada) - EP"));
+        saveArtistWithAlbums("Guns N’ Roses", ArtistType.BAND, Arrays.asList("Use Your Illusion I", "Use Your Illusion II", "Greatest Hits"));
     }
 
-    private void saveArtistWithAlbums(String name, List<String> albumTitles) {
+    private void saveArtistWithAlbums(String name, ArtistType type, List<String> albumTitles) {
         Artist artist = new Artist();
         artist.setName(name);
+        artist.setType(type);
         
         List<Album> albums = new ArrayList<>();
         for (String title : albumTitles) {
