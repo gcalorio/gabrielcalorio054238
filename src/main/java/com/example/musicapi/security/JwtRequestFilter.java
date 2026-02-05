@@ -2,6 +2,7 @@ package com.example.musicapi.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private RateLimitingService rateLimitingService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
@@ -47,17 +51,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             logger.warn("O Token JWT nao comeca com Bearer String");
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (username != null) {
+            // Ignora rate limit para endpoints do Actuator (monitoramento não deve ser bloqueado facilmente)
+            if (!request.getRequestURI().startsWith("/actuator/")) {
+                if (!rateLimitingService.tryConsume(username)) {
+                    response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+                    response.getWriter().write("Too many requests - Rate limit exceeded");
+                    return;
+                }
+            }
 
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
             }
         }
         chain.doFilter(request, response);
