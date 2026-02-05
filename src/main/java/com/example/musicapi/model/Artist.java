@@ -4,8 +4,6 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.util.List;
 
 @Entity
@@ -21,7 +19,11 @@ public class Artist {
     @Enumerated(EnumType.STRING)
     private ArtistType type;
 
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "artist_album",
+        joinColumns = @JoinColumn(name = "artist_id"),
+        inverseJoinColumns = @JoinColumn(name = "album_id")
+    )
     private List<Album> albums;
 }

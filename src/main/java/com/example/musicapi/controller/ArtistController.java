@@ -87,10 +87,6 @@ public class ArtistController {
     @PostMapping("/artists")
     @Operation(summary = "Criar artista", description = "Cria um novo artista e seus álbuns associados.")
     public Artist createArtist(@RequestBody Artist artist) {
-        // Asegurarse de que los álbumes tengan la referencia al artista si se envían en el POST
-        if (artist.getAlbums() != null) {
-            artist.getAlbums().forEach(album -> album.setArtist(artist));
-        }
         Artist savedArtist = artistRepository.save(artist);
         
         // Notificar via WebSocket sobre novos álbuns
@@ -109,9 +105,6 @@ public class ArtistController {
                 .map(artist -> {
                     artist.setName(artistDetails.getName());
                     if (artistDetails.getAlbums() != null) {
-                        // En una implementación real, esto podría ser más complejo (borrar, actualizar, etc.)
-                        // Para este caso simple, reemplazamos o actualizamos la lista
-                        artistDetails.getAlbums().forEach(album -> album.setArtist(artist));
                         artist.setAlbums(artistDetails.getAlbums());
                     }
                     Artist updatedArtist = artistRepository.save(artist);

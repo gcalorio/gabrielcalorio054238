@@ -4,7 +4,7 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 @Entity
@@ -17,10 +17,9 @@ public class Album {
     private Long id;
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "artist_id")
-    @JsonBackReference
-    private Artist artist;
+    @ManyToMany(mappedBy = "albums")
+    @JsonIgnore
+    private List<Artist> artists;
 
     @ElementCollection
     @CollectionTable(name = "album_covers", joinColumns = @JoinColumn(name = "album_id"))

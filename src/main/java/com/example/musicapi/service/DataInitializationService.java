@@ -39,7 +39,6 @@ public class DataInitializationService {
         for (String title : albumTitles) {
             Album album = new Album();
             album.setTitle(title);
-            album.setArtist(artist);
             albums.add(album);
         }
         artist.setAlbums(albums);
