@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,14 +38,16 @@ public class ArtistController {
     private final ArtistRepository artistRepository;
     private final AlbumRepository albumRepository;
     private final StorageService storageService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @Value("${upload.path:uploads/covers/}")
     private String uploadPath;
 
-    public ArtistController(ArtistRepository artistRepository, AlbumRepository albumRepository, StorageService storageService) {
+    public ArtistController(ArtistRepository artistRepository, AlbumRepository albumRepository, StorageService storageService, SimpMessagingTemplate messagingTemplate) {
         this.artistRepository = artistRepository;
         this.albumRepository = albumRepository;
         this.storageService = storageService;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @GetMapping("/artists")
@@ -88,7 +91,16 @@ public class ArtistController {
         if (artist.getAlbums() != null) {
             artist.getAlbums().forEach(album -> album.setArtist(artist));
         }
-        return artistRepository.save(artist);
+        Artist savedArtist = artistRepository.save(artist);
+        
+        // Notificar via WebSocket sobre novos álbuns
+        if (savedArtist.getAlbums() != null) {
+            savedArtist.getAlbums().forEach(album -> 
+                messagingTemplate.convertAndSend("/topic/albums", album)
+            );
+        }
+        
+        return savedArtist;
     }
 
     @PutMapping("/artists/{id}")

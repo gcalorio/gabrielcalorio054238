@@ -231,4 +231,25 @@ class MusicApiApplicationTests {
                 .andExpect(jsonPath("$.coverUrls", hasSize(2)))
                 .andExpect(jsonPath("$.coverUrls[0]", is("http://presigned-url.com/mocked_filename.jpg")));
     }
+
+    @Test
+    void shouldAccessHealthCheck() throws Exception {
+        mockMvc.perform(get("/actuator/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is("UP")));
+    }
+
+    @Test
+    void shouldAccessLiveness() throws Exception {
+        mockMvc.perform(get("/actuator/health/liveness"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is("UP")));
+    }
+
+    @Test
+    void shouldAccessReadiness() throws Exception {
+        mockMvc.perform(get("/actuator/health/readiness"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is("UP")));
+    }
 }
