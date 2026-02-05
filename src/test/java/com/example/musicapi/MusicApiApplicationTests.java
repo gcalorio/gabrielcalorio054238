@@ -8,6 +8,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 import com.example.musicapi.service.StorageService;
+import com.example.musicapi.security.RateLimitingService;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -27,6 +29,14 @@ class MusicApiApplicationTests {
 
     @MockBean
     private StorageService storageService;
+
+    @Autowired
+    private RateLimitingService rateLimitingService;
+
+    @BeforeEach
+    void setUp() {
+        rateLimitingService.reset("admin");
+    }
 
     @Test
     void shouldReturnUnauthorizedWithoutToken() throws Exception {

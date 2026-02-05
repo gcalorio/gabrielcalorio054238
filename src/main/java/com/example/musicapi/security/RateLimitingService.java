@@ -32,4 +32,8 @@ public class RateLimitingService {
             return false;
         }
     }
+
+    public void reset(String username) {
+        userRequests.remove(username);
+    }
 }
